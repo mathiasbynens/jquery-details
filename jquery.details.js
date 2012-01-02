@@ -1,8 +1,10 @@
-/*! http://mths.be/details v0.0.1 by @mathias */
+/*! http://mths.be/details v0.0.2 by @mathias | includes http://mths.be/noselect v1.0.2 */
 (function(document, $) {
 
 	var proto = $.fn,
 	    details,
+	    // :'(
+	    isOpera = Object.prototype.toString.call(window.opera) == '[object Opera]',
 	    // Feature test for native `<details>` support
 	    isDetailsSupported = (function(doc) {
 	    	var el = doc.createElement('details'),
@@ -30,7 +32,7 @@
 	    	return diff;
 	    }(document));
 
-	/*! http://mths.be/noselect v1.0.2 by @mathias */
+	/* http://mths.be/noselect v1.0.2 */
 	proto.noSelect = function() {
 
 		// Since the string 'none' is used three times, storing it in a variable gives better results after minification
@@ -78,7 +80,7 @@
 				// If there is no `summary` in the current `details` element…
 				if (!$detailsSummary.length) {
 					// …create one with default text
-					$detailsSummary = $(document.createElement('summary')).text('Details').prependTo($details);
+					$detailsSummary = $('<summary>').text('Details').prependTo($details);
 				}
 
 				// Look for direct child text nodes
@@ -87,7 +89,7 @@
 					$detailsNotSummaryContents.filter(function() {
 						// Only keep the node in the collection if it’s a text node containing more than only whitespace
 						// http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#space-character
-						return (this.nodeType === 3) && (/[^ \t\n\f\r]/.test(this.data));
+						return this.nodeType == 3 && /[^ \t\n\f\r]/.test(this.data);
 					}).wrap('<span>');
 					// There are now no direct child text nodes anymore — they’re wrapped in `span` elements
 					$detailsNotSummary = $details.children(':not(summary)');
@@ -104,19 +106,19 @@
 				}
 
 				// Set the `tabindex` of the `summary` element to 0 to make it keyboard accessible
-				$detailsSummary.noSelect().attr('tabIndex', 0).click(function() {
+				$detailsSummary.noSelect().prop('tabIndex', 0).on('click', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
 					// Toggle the `open` attribute of the `details` element
 					typeof $details.attr('open') != 'undefined' ? $details.removeAttr('open') : $details.attr('open', 'open');
 					// Toggle the additional information in the `details` element
-					$detailsNotSummary.toggle(0);
+					$detailsNotSummary.toggle();
 					$details.toggleClass('open');
 				}).keyup(function(event) {
-					if (13 === event.keyCode || 32 === event.keyCode) {
+					if (13 == event.keyCode || 32 == event.keyCode) {
 						// Enter or Space is pressed — trigger the `click` event on the `summary` element
 						// Opera already seems to trigger the `click` event when Enter is pressed
-						if (!($.browser.opera && 13 === event.keyCode)) {
+						if (!(isOpera && 13 == event.keyCode)) {
 							event.preventDefault();
 							$detailsSummary.click();
 						}

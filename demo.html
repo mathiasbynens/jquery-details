@@ -6,15 +6,18 @@
 		<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<style>
 			details, summary { display: block; border: 1px solid #666; padding: 1em; }
-			.no-details summary:hover, .no-details summary:focus { background: #ddd; }
+			/* Apply a pointer cursor and style the background upon hover to indicate <summary> is a clickable element. */
+			/* These styles can be applied regardless of whether the fallback is needed */
+			summary { cursor: pointer; }
+			summary:hover, summary:focus { background: #ddd; }
+
 			/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
 			/* However, we’re still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
 			/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
-
 			.no-details details > * { display: none; }
 			/* This doesn’t work very well in Firefox 3.6.x */
 			/* .no-details details[open] > * { display: block; } */
-			/* The following doesn’t toggle correctly in Webkit:
+			/* The following doesn’t toggle correctly in WebKit:
 			.no-details details summary:before { content: '► '; }
 			.no-details details[open] summary:before { content: '▼ '; }
 			*/
@@ -29,8 +32,6 @@
 			*/
 			/* Make sure summary remains visible */
 			.no-details details summary { display: block; }
-			/* Apply a pointer cursor upon hover to indicate it’s a clickable element. These styles can be applied regardless of whether the fallback is needed */
-			summary { cursor: pointer; }
 		</style>
 	</head>
 	<body>
@@ -122,10 +123,9 @@
 			$(function() {
 				var nativeDetailsSupport = $.fn.details.support;
 				if (!nativeDetailsSupport) {
-					document.documentElement.className += ' no-details';
+					$('html').className += ' no-details';
 				}
 				$('details').details();
-
 				$('body').prepend(nativeDetailsSupport ? 'Native support detected; the plugin won’t do anything.' : 'Emulation active; you are watching the plugin in action!');
 			});
 		</script>
