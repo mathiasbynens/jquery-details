@@ -115,13 +115,11 @@
 					$detailsNotSummary.toggle();
 					$details.toggleClass('open');
 				}).keyup(function(event) {
-					if (13 == event.keyCode || 32 == event.keyCode) {
-						// Enter or Space is pressed — trigger the `click` event on the `summary` element
+					if (32 == event.keyCode && !isOpera || 13 == event.keyCode) {
+						// Space or Enter is pressed — trigger the `click` event on the `summary` element
 						// Opera already seems to trigger the `click` event when Enter is pressed
-						if (!(isOpera && 13 == event.keyCode)) {
-							event.preventDefault();
-							$detailsSummary.click();
-						}
+						event.preventDefault();
+						$detailsSummary.click();
 					}
 				});
 
