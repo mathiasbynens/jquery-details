@@ -1,5 +1,5 @@
-/*! http://mths.be/details v0.0.2 by @mathias | includes http://mths.be/noselect v1.0.2 */
-(function(document, $) {
+/*! http://mths.be/details v0.0.3α by @mathias | includes http://mths.be/noselect v1.0.2 */
+;(function(document, $) {
 
 	var proto = $.fn,
 	    details,
@@ -98,19 +98,27 @@
 				// Hide content unless there’s an `open` attribute
 				// Chrome 10 already recognizes the `open` property as a boolean (even though it doesn’t support rendering `<details>` yet)
 				// Other browsers without `<details>` support treat it as a string
-				if (typeof open == 'string' || (typeof open == 'boolean' && open)) {
+				if (typeof open == 'string') {
 					$details.addClass('open');
+					$details.prop('open', true);
 					$detailsNotSummary.show();
 				} else {
+					$details.prop('open', false);
 					$detailsNotSummary.hide();
 				}
 
-				// Set the `tabindex` of the `summary` element to 0 to make it keyboard accessible
+				// Set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
 				$detailsSummary.noSelect().prop('tabIndex', 0).on('click', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
-					// Toggle the `open` attribute of the `details` element
-					typeof $details.attr('open') != 'undefined' ? $details.removeAttr('open') : $details.attr('open', 'open');
+					// Toggle the `open` attribute and property of the `details` element
+					if (typeof $details.attr('open') == 'string') {
+						$details.prop('open', false);
+						$details.removeAttr('open');
+					} else {
+						$details.prop('open', true);
+						$details.attr('open', 'open');
+					}
 					// Toggle the additional information in the `details` element
 					$detailsNotSummary.toggle();
 					$details.toggleClass('open');
