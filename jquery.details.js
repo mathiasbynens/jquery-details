@@ -1,4 +1,4 @@
-/*! http://mths.be/details v0.0.3α by @mathias | includes http://mths.be/noselect v1.0.2 */
+/*! http://mths.be/details v0.0.3 by @mathias | includes http://mths.be/noselect v1.0.2 */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -30,7 +30,18 @@
 	    		root.parentNode.removeChild(root);
 	    	}
 	    	return diff;
-	    }(document));
+	    }(document)),
+	    toggleOpen = function($details, $detailsNotSummary, toggle) {
+	    	var isOpen = typeof $details.attr('open') == 'string',
+	    	    close = isOpen && toggle || !isOpen && !toggle;
+	    	if (close) {
+	    		$details.removeClass('open').prop('open', false);
+	    		$detailsNotSummary.hide();
+	    	} else {
+	    		$details.addClass('open').prop('open', true);
+	    		$detailsNotSummary.show();
+	    	}
+	    };
 
 	/* http://mths.be/noselect v1.0.2 */
 	proto.noSelect = function() {
@@ -72,10 +83,7 @@
 				    // Do the same for the info within the `details` element
 				    $detailsNotSummary = $details.children(':not(summary)'),
 				    // This will be used later to look for direct child text nodes
-				    $detailsNotSummaryContents = $details.contents(':not(summary)'),
-				    // This will be used later on
-				    // Note that .hasAttribute doesn’t work in older IEs
-				    open = this.getAttribute('open');
+				    $detailsNotSummaryContents = $details.contents(':not(summary)');
 
 				// If there is no `summary` in the current `details` element…
 				if (!$detailsSummary.length) {
@@ -96,32 +104,14 @@
 				}
 
 				// Hide content unless there’s an `open` attribute
-				// Chrome 10 already recognizes the `open` property as a boolean (even though it doesn’t support rendering `<details>` yet)
-				// Other browsers without `<details>` support treat it as a string
-				if (typeof open == 'string') {
-					$details.addClass('open');
-					$details.prop('open', true);
-					$detailsNotSummary.show();
-				} else {
-					$details.prop('open', false);
-					$detailsNotSummary.hide();
-				}
+				toggleOpen($details, $detailsNotSummary);
 
 				// Set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
 				$detailsSummary.noSelect().prop('tabIndex', 0).on('click', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
-					// Toggle the `open` attribute and property of the `details` element
-					if (typeof $details.attr('open') == 'string') {
-						$details.prop('open', false);
-						$details.removeAttr('open');
-					} else {
-						$details.prop('open', true);
-						$details.attr('open', 'open');
-					}
-					// Toggle the additional information in the `details` element
-					$detailsNotSummary.toggle();
-					$details.toggleClass('open');
+					// Toggle the `open` attribute and property of the `details` element and display the additional info
+					toggleOpen($details, $detailsNotSummary, true);
 				}).keyup(function(event) {
 					if (32 == event.keyCode && !isOpera || 13 == event.keyCode) {
 						// Space or Enter is pressed — trigger the `click` event on the `summary` element
