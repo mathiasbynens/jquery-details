@@ -1,4 +1,4 @@
-/*! http://mths.be/details v0.0.4α by @mathias | includes http://mths.be/noselect v1.0.2 */
+/*! http://mths.be/details v0.0.4α by @mathias | includes http://mths.be/noselect v1.0.3 */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -45,7 +45,7 @@
 	    	}
 	    };
 
-	/* http://mths.be/noselect v1.0.2 */
+	/* http://mths.be/noselect v1.0.3 */
 	proto.noSelect = function() {
 
 		// Since the string 'none' is used three times, storing it in a variable gives better results after minification
@@ -57,7 +57,8 @@
 			return false;
 		}).css({
 			'MozUserSelect': none,
-			'WebkitUserSelect': none,
+			'msUserSelect': none,
+			'webkitUserSelect': none,
 			'userSelect': none
 		});
 
