@@ -1,4 +1,4 @@
-/*! http://mths.be/details v0.0.3 by @mathias | includes http://mths.be/noselect v1.0.2 */
+/*! http://mths.be/details v0.0.4α by @mathias | includes http://mths.be/noselect v1.0.2 */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -35,10 +35,10 @@
 	    	var isOpen = typeof $details.attr('open') == 'string',
 	    	    close = isOpen && toggle || !isOpen && !toggle;
 	    	if (close) {
-	    		$details.removeClass('open').prop('open', false);
+	    		$details.removeClass('open').prop('open', false).triggerHandler('close.details');
 	    		$detailsNotSummary.hide();
 	    	} else {
-	    		$details.addClass('open').prop('open', true);
+	    		$details.addClass('open').prop('open', true).triggerHandler('open.details');
 	    		$detailsNotSummary.show();
 	    	}
 	    };
@@ -65,7 +65,11 @@
 	if (isDetailsSupported) {
 
 		details = proto.details = function() {
-			return this;
+			return this.on('click', 'summary', function() {
+				// the value of the `open` property is the old value
+				var $details = $(this).parent('details');
+				$details.triggerHandler(($details.prop('open') ? 'close' : 'open') + '.details');
+			});
 		};
 		details.support = isDetailsSupported;
 

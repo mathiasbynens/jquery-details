@@ -120,13 +120,28 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script src="jquery.details.js"></script>
 		<script>
+			window.console || (window.console = { 'log': alert });
 			$(function() {
-				var nativeDetailsSupport = $.fn.details.support;
-				if (!nativeDetailsSupport) {
-					$('html').addClass('no-details');
-				}
+
+				// Add conditional classname based on support
+				$('html').addClass($.fn.details.support ? 'details' : 'no-details');
+
+				// Show a message based on support
+				$('body').prepend($.fn.details.support ? 'Native support detected; the plugin won’t do anything.' : 'Emulation active; you are watching the plugin in action!');
+
+				// Emulate <details> where necessary and enable open/close event handlers
 				$('details').details();
-				$('body').prepend(nativeDetailsSupport ? 'Native support detected; the plugin won’t do anything.' : 'Emulation active; you are watching the plugin in action!');
+
+				// Bind some example event handlers
+				$('details').on({
+					'open.details': function() {
+						console.log('opened');
+					},
+					'close.details': function() {
+						console.log('closed');
+					}
+				});
+
 			});
 		</script>
 	</body>

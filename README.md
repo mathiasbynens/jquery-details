@@ -8,11 +8,41 @@ This plugin polyfills `<details>`/`<summary>` HTML elements. [More information c
 
 ## Example Usage
 
+In its simplest form:
+
 ```js
 // Polyfill a given set of elements
 $('details').details();
+```
+
+The plugin will automatically detect browser support and act accordingly. If other parts of your code need to know whether `<details>`/`<summary>` are supported or not, use `$.fn.details.support`:
+
+```js
 // Detect whether `<details>`/`<summary>` are natively supported
 console.log($.fn.details.support ? 'Native support' : 'No native support');
+// Conditionally add a classname to the `html` element, based on native support
+$('html').addClass($.fn.details.support ? 'details' : 'no-details');
+```
+
+The plugin will provide `open.details` and `close.details` events for you to use:
+
+```js
+$('details').on({
+	'open.details': function() {
+		console.log('opened');
+	},
+	'close.details': function() {
+		console.log('closed');
+	}
+});
+```
+
+Any handlers bound to these events will fire even in browsers that natively support `<details>`.
+
+Since both events live under the `details` namespace, you can easily unbind all handlers that are specific to this plugin:
+
+```js
+$('details').off('.details');
 ```
 
 ## Notes
