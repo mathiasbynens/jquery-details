@@ -31,14 +31,16 @@
 	    	}
 	    	return diff;
 	    }(document)),
-	    toggleOpen = function($details, $detailsNotSummary, toggle) {
+	    toggleOpen = function($details, $detailsSummary, $detailsNotSummary, toggle) {
 	    	var isOpen = typeof $details.attr('open') == 'string',
 	    	    close = isOpen && toggle || !isOpen && !toggle;
 	    	if (close) {
 	    		$details.removeClass('open').prop('open', false).triggerHandler('close.details');
+	    		$detailsSummary.attr('aria-expanded', false);
 	    		$detailsNotSummary.hide();
 	    	} else {
 	    		$details.addClass('open').prop('open', true).triggerHandler('open.details');
+	    		$detailsSummary.attr('aria-expanded', true);
 	    		$detailsNotSummary.show();
 	    	}
 	    };
@@ -65,12 +67,23 @@
 	if (isDetailsSupported) {
 
 		details = proto.details = function() {
-			return this.on('click', 'summary', function() {
-				// the value of the `open` property is the old value
-				var $details = $(this).parent('details');
-				$details.triggerHandler(($details.prop('open') ? 'close' : 'open') + '.details');
+
+			return this.each(function() {
+				var $details = $(this),
+				    $summary = $('summary', $details);
+				$summary.attr({
+					'role': 'button',
+					'aria-expanded': $details.prop('open')
+				}).on('click', function() {
+					// the value of the `open` property is the old value
+					var close = $details.prop('open');
+					$summary.attr('aria-expanded', !close);
+					$details.triggerHandler((close ? 'close' : 'open') + '.details');
+				});
 			});
+
 		};
+
 		details.support = isDetailsSupported;
 
 	} else {
@@ -108,14 +121,14 @@
 				}
 
 				// Hide content unless there’s an `open` attribute
-				toggleOpen($details, $detailsNotSummary);
+				toggleOpen($details, $detailsSummary, $detailsNotSummary);
 
-				// Set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
-				$detailsSummary.noSelect().prop('tabIndex', 0).on('click', function() {
+				// Add `role=button` and set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
+				$detailsSummary.attr('role', 'button').noSelect().prop('tabIndex', 0).on('click', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
-					// Toggle the `open` attribute and property of the `details` element and display the additional info
-					toggleOpen($details, $detailsNotSummary, true);
+					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
+					toggleOpen($details, $detailsSummary, $detailsNotSummary, true);
 				}).keyup(function(event) {
 					if (32 == event.keyCode && !isOpera || 13 == event.keyCode) {
 						// Space or Enter is pressed — trigger the `click` event on the `summary` element
