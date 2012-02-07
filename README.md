@@ -1,6 +1,6 @@
 # `<details>`/`<summary>` jQuery plugin
 
-This plugin polyfills `<details>`/`<summary>` HTML elements. [More information can be found in my blog post on the subject.](http://mathiasbynens.be/notes/html5-details-jquery)
+This plugin polyfills `<details>`/`<summary>` HTML elements and adds [the appropriate ARIA annotations](http://mathiasbynens.be/notes/html5-details-jquery#comment-58) for optimal accessibility. [More information can be found in my blog post on the subject.](http://mathiasbynens.be/notes/html5-details-jquery)
 
 ## Demo & Examples
 
@@ -28,12 +28,12 @@ The plugin will provide `open.details` and `close.details` events for you to use
 
 ```js
 $('details').on({
-	'open.details': function() {
-		console.log('opened');
-	},
-	'close.details': function() {
-		console.log('closed');
-	}
+ 'open.details': function() {
+    console.log('opened');
+  },
+  'close.details': function() {
+    console.log('closed');
+  }
 });
 ```
 
@@ -56,6 +56,8 @@ This plugin automatically feature tests for native `<details>`/`<summary>` suppo
 This plugin requires jQuery 1.7+. For a version that works with older jQueries, [see v0.0.1](https://github.com/mathiasbynens/jquery-details/blob/0.0.1/jquery.details.js).
 
 This fallback works in all A-grade browsers, including IE6. It will only be executed if the `<details>` element is not natively supported in the browser. If it isn’t, and JavaScript is disabled, all elements will still be visible to the user.
+
+While the plugin has a certain level of support for `<details>` elements without a `<summary>`, it should be noted that omitting the `<summary>` element results in invalid HTML, and prevents the custom `open.details`/`close.details` events from firing in browsers that natively support `<details>`. Don’t do this!
 
 ## License
 

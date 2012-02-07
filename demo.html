@@ -58,8 +58,9 @@
 			</details>
 		</section>
 		<!-- Same example, but now without a <summary> -->
+		<!-- Note that omitting the <summary> element results in invalid HTML, and prevents the custom open/close events from firing in browsers that natively support `<details>`. Don’t do this! -->
 		<section class="progress window">
-			<h1>Copying “Really Achieving Your Childhood Dreams” (<code>details</code> without <code>summary</code>)</h1>
+			<h1>Copying “Really Achieving Your Childhood Dreams” (<code>details</code> without <code>summary</code> — this is invalid HTML!)</h1>
 			<details>
 				<dl>
 					<dt>Transfer rate:</dt>
@@ -99,6 +100,7 @@
 			</details>
 		</section>
 		<!-- <details> element containing only text, as requested by Shelley Powers -->
+		<!-- Note that omitting the <summary> element results in invalid HTML, and prevents the custom open/close events from firing in browsers that natively support `<details>`. Don’t do this! -->
 		<section>
 			<h1><code>details</code> element containing only text</h1>
 			<details>
@@ -106,6 +108,7 @@
 			</details>
 		</section>
 		<!-- <details> element containing some direct child text nodes in addition to other children -->
+		<!-- Note that omitting the <summary> element results in invalid HTML, and prevents the custom open/close events from firing in browsers that natively support `<details>`. Don’t do this! -->
 		<section>
 			<h1><code>details</code> element containing some children and some child text nodes</h1>
 			<details>
