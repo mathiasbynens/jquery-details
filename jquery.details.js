@@ -1,4 +1,4 @@
-/*! http://mths.be/details v0.0.4 by @mathias | includes http://mths.be/noselect v1.0.3 */
+/*! http://mths.be/details v0.0.5 by @mathias | includes http://mths.be/noselect v1.0.3 */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -71,7 +71,7 @@
 
 			return this.each(function() {
 				var $details = $(this),
-				    $summary = $('summary', $details);
+				    $summary = $('summary', $details).first();
 				$summary.attr({
 					'role': 'button',
 					'aria-expanded': $details.prop('open')
@@ -97,7 +97,7 @@
 				// Store a reference to the current `details` element in a variable
 				var $details = $(this),
 				    // Store a reference to the `summary` element of the current `details` element (if any) in a variable
-				    $detailsSummary = $('summary', $details),
+				    $detailsSummary = $('summary', $details).first(),
 				    // Do the same for the info within the `details` element
 				    $detailsNotSummary = $details.children(':not(summary)'),
 				    // This will be used later to look for direct child text nodes
