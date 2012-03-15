@@ -1,4 +1,4 @@
-/*! http://mths.be/details v0.0.5 by @mathias | includes http://mths.be/noselect v1.0.3 */
+/*! http://mths.be/details v0.0.6 by @mathias | includes http://mths.be/noselect v1.0.3 */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -131,7 +131,7 @@
 					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
 					toggleOpen($details, $detailsSummary, $detailsNotSummary, true);
 				}).keyup(function(event) {
-					if (32 == event.keyCode && !isOpera || 13 == event.keyCode) {
+					if (32 == event.keyCode || (13 == event.keyCode && !isOpera)) {
 						// Space or Enter is pressed — trigger the `click` event on the `summary` element
 						// Opera already seems to trigger the `click` event when Enter is pressed
 						event.preventDefault();
