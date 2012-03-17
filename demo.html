@@ -18,17 +18,17 @@
 			/* This doesn’t work very well in Firefox 3.6.x */
 			/* .no-details details[open] > * { display: block; } */
 			/* The following doesn’t toggle correctly in WebKit:
-			.no-details details summary:before { content: '► '; }
-			.no-details details[open] summary:before { content: '▼ '; }
+			.no-details details > summary:before { content: '► '; }
+			.no-details details[open] > summary:before { content: '▼ '; }
 			*/
 			/* And yes, it should really be ::before, but that doesn’t work in IE8 */
-			.no-details details summary:before { float: left; width: 20px; content: '► '; }
-			.no-details details.open summary:before { content: '▼ '; }
+			.no-details details > summary:before { float: left; width: 20px; content: '► '; }
+			.no-details details.open > summary:before { content: '▼ '; }
 			/* For IE6 and IE7, who don’t support generated content, you could use padding-left + a background image instead */
 			/* I really couldn’t be bothered though. */
 			/*
-			.no-details details summary { padding-left: 20px; background: url(img/arrow-sprite.png) no-repeat 0 0; }
-			.no-details details.open summary { background-position: 0 -20px; }
+			.no-details details > summary { padding-left: 20px; background: url(img/arrow-sprite.png) no-repeat 0 0; }
+			.no-details details.open > summary { background-position: 0 -20px; }
 			*/
 			/* Make sure summary remains visible */
 			.no-details details summary { display: block; }
