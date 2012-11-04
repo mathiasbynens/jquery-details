@@ -1,49 +1,49 @@
-/*! http://mths.be/details v0.0.6 by @mathias | includes http://mths.be/noselect v1.0.3 */
+/*! http://mths.be/details v0.0.7 by @mathias | includes http://mths.be/noselect v1.0.3 */
 ;(function(document, $) {
-
+	"use strict";
 	var proto = $.fn,
-	    details,
-	    // :'(
-	    isOpera = Object.prototype.toString.call(window.opera) == '[object Opera]',
-	    // Feature test for native `<details>` support
-	    isDetailsSupported = (function(doc) {
-	    	var el = doc.createElement('details'),
-	    	    fake,
-	    	    root,
-	    	    diff;
-	    	if (!('open' in el)) {
-	    		return false;
-	    	}
-	    	root = doc.body || (function() {
-	    		var de = doc.documentElement;
-	    		fake = true;
-	    		return de.insertBefore(doc.createElement('body'), de.firstElementChild || de.firstChild);
-	    	}());
-	    	el.innerHTML = '<summary>a</summary>b';
-	    	el.style.display = 'block';
-	    	root.appendChild(el);
-	    	diff = el.offsetHeight;
-	    	el.open = true;
-	    	diff = diff != el.offsetHeight;
-	    	root.removeChild(el);
-	    	if (fake) {
-	    		root.parentNode.removeChild(root);
-	    	}
-	    	return diff;
-	    }(document)),
-	    toggleOpen = function($details, $detailsSummary, $detailsNotSummary, toggle) {
-	    	var isOpen = typeof $details.attr('open') == 'string',
-	    	    close = isOpen && toggle || !isOpen && !toggle;
-	    	if (close) {
-	    		$details.removeClass('open').prop('open', false).triggerHandler('close.details');
-	    		$detailsSummary.attr('aria-expanded', false);
-	    		$detailsNotSummary.hide();
-	    	} else {
-	    		$details.addClass('open').prop('open', true).triggerHandler('open.details');
-	    		$detailsSummary.attr('aria-expanded', true);
-	    		$detailsNotSummary.show();
-	    	}
-	    };
+		details,
+		// :'(
+		isOpera = Object.prototype.toString.call(window.opera) === '[object Opera]',
+		// Feature test for native `<details>` support
+		isDetailsSupported = (function(doc) {
+			var el = doc.createElement('details'),
+				fake,
+				root,
+				diff;
+			if (!('open' in el)) {
+				return false;
+			}
+			root = doc.body || (function() {
+				var de = doc.documentElement;
+				fake = true;
+				return de.insertBefore(doc.createElement('body'), de.firstElementChild || de.firstChild);
+			}());
+			el.innerHTML = '<summary>a</summary>b';
+			el.style.display = 'block';
+			root.appendChild(el);
+			diff = el.offsetHeight;
+			el.open = true;
+			diff = diff !== el.offsetHeight;
+			root.removeChild(el);
+			if (fake) {
+				root.parentNode.removeChild(root);
+			}
+			return diff;
+		}(document)),
+		toggleOpen = function($details, $detailsSummary, $detailsNotSummary, toggle) {
+			var isOpen = typeof $details.attr('open') === 'string',
+				close = isOpen && toggle || !isOpen && !toggle;
+			if (close) {
+				$details.removeClass('open').prop('open', false).triggerHandler('close.details');
+				$detailsSummary.attr('aria-expanded', false);
+				$detailsNotSummary.hide();
+			} else {
+				$details.addClass('open').prop('open', true).triggerHandler('open.details');
+				$detailsSummary.attr('aria-expanded', true);
+				$detailsNotSummary.show();
+			}
+		};
 
 	/* http://mths.be/noselect v1.0.3 */
 	proto.noSelect = function() {
@@ -71,7 +71,7 @@
 
 			return this.each(function() {
 				var $details = $(this),
-				    $summary = $('summary', $details).first();
+					$summary = $('summary', $details).first();
 				$summary.attr({
 					'role': 'button',
 					'aria-expanded': $details.prop('open')
@@ -96,12 +96,12 @@
 
 				// Store a reference to the current `details` element in a variable
 				var $details = $(this),
-				    // Store a reference to the `summary` element of the current `details` element (if any) in a variable
-				    $detailsSummary = $('summary', $details).first(),
-				    // Do the same for the info within the `details` element
-				    $detailsNotSummary = $details.children(':not(summary)'),
-				    // This will be used later to look for direct child text nodes
-				    $detailsNotSummaryContents = $details.contents(':not(summary)');
+					// Store a reference to the `summary` element of the current `details` element (if any) in a variable
+					$detailsSummary = $('summary', $details).first(),
+					// Do the same for the info within the `details` element
+					$detailsNotSummary = $details.children(':not(summary)'),
+					// This will be used later to look for direct child text nodes
+					$detailsNotSummaryContents = $details.contents(':not(summary)');
 
 				// If there is no `summary` in the current `details` element…
 				if (!$detailsSummary.length) {
@@ -110,12 +110,12 @@
 				}
 
 				// Look for direct child text nodes
-				if ($detailsNotSummary.length != $detailsNotSummaryContents.length) {
+				if ($detailsNotSummary.length !== $detailsNotSummaryContents.length) {
 					// Wrap child text nodes in a `span` element
 					$detailsNotSummaryContents.filter(function() {
 						// Only keep the node in the collection if it’s a text node containing more than only whitespace
 						// http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#space-character
-						return this.nodeType == 3 && /[^ \t\n\f\r]/.test(this.data);
+						return this.nodeType === 3 && /[^ \t\n\f\r]/.test(this.data);
 					}).wrap('<span>');
 					// There are now no direct child text nodes anymore — they’re wrapped in `span` elements
 					$detailsNotSummary = $details.children(':not(summary)');
@@ -131,7 +131,7 @@
 					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
 					toggleOpen($details, $detailsSummary, $detailsNotSummary, true);
 				}).keyup(function(event) {
-					if (32 == event.keyCode || (13 == event.keyCode && !isOpera)) {
+					if (event.keyCode === 32 || (event.keyCode === 13 && !isOpera)) {
 						// Space or Enter is pressed — trigger the `click` event on the `summary` element
 						// Opera already seems to trigger the `click` event when Enter is pressed
 						event.preventDefault();
