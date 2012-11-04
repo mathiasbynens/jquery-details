@@ -4,7 +4,7 @@
 	var proto = $.fn,
 		details,
 		// :'(
-		isOpera = Object.prototype.toString.call(window.opera) == '[object Opera]',
+		isOpera = Object.prototype.toString.call(window.opera) === '[object Opera]',
 		// Feature test for native `<details>` support
 		isDetailsSupported = (function(doc) {
 			var el = doc.createElement('details'),
@@ -24,7 +24,7 @@
 			root.appendChild(el);
 			diff = el.offsetHeight;
 			el.open = true;
-			diff = diff != el.offsetHeight;
+			diff = diff !== el.offsetHeight;
 			root.removeChild(el);
 			if (fake) {
 				root.parentNode.removeChild(root);
@@ -32,7 +32,7 @@
 			return diff;
 		}(document)),
 		toggleOpen = function($details, $detailsSummary, $detailsNotSummary, toggle) {
-			var isOpen = typeof $details.attr('open') == 'string',
+			var isOpen = typeof $details.attr('open') === 'string',
 				close = isOpen && toggle || !isOpen && !toggle;
 			if (close) {
 				$details.removeClass('open').prop('open', false).triggerHandler('close.details');
@@ -110,12 +110,12 @@
 				}
 
 				// Look for direct child text nodes
-				if ($detailsNotSummary.length != $detailsNotSummaryContents.length) {
+				if ($detailsNotSummary.length !== $detailsNotSummaryContents.length) {
 					// Wrap child text nodes in a `span` element
 					$detailsNotSummaryContents.filter(function() {
 						// Only keep the node in the collection if it’s a text node containing more than only whitespace
 						// http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#space-character
-						return this.nodeType == 3 && /[^ \t\n\f\r]/.test(this.data);
+						return this.nodeType === 3 && /[^ \t\n\f\r]/.test(this.data);
 					}).wrap('<span>');
 					// There are now no direct child text nodes anymore — they’re wrapped in `span` elements
 					$detailsNotSummary = $details.children(':not(summary)');
@@ -131,7 +131,7 @@
 					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
 					toggleOpen($details, $detailsSummary, $detailsNotSummary, true);
 				}).keyup(function(event) {
-					if (32 == event.keyCode || (13 == event.keyCode && !isOpera)) {
+					if (event.keyCode === 32 || (event.keyCode === 13 && !isOpera)) {
 						// Space or Enter is pressed — trigger the `click` event on the `summary` element
 						// Opera already seems to trigger the `click` event when Enter is pressed
 						event.preventDefault();
