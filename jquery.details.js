@@ -1,4 +1,4 @@
-/*! http://mths.be/details v0.0.6 by @mathias | includes http://mths.be/noselect v1.0.3 */
+/*! http://mths.be/details v0.0.7 by @mathias | includes http://mths.be/noselect v1.0.3 */
 ;(function(document, $) {
 	"use strict";
 	var proto = $.fn,
