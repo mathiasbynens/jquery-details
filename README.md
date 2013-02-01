@@ -53,7 +53,7 @@ This plugin includes my [noSelect jQuery plugin](http://mths.be/noselect).
 
 This plugin automatically feature tests for native `<details>`/`<summary>` support and only enables the fallback when it’s necessary. You don’t have to write any feature tests yourself.
 
-This plugin requires jQuery 1.7+. For a version that works with older jQueries, [see v0.0.1](https://github.com/mathiasbynens/jquery-details/blob/0.0.1/jquery.details.js).
+This plugin requires jQuery 1.9+. For a version that works with jQuery 1.8 or older, [see v0.0.6](https://github.com/mathiasbynens/jquery-details/blob/0.0.6/jquery.details.js). For a version that works with jQuery 1.6 or older, [see v0.0.1](https://github.com/mathiasbynens/jquery-details/blob/0.0.1/jquery.details.js).
 
 This fallback works in all A-grade browsers, including IE6. It will only be executed if the `<details>` element is not natively supported in the browser. If it isn’t, and JavaScript is disabled, all elements will still be visible to the user.
 
