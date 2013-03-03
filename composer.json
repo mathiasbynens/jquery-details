@@ -8,6 +8,6 @@
     "GPL-2.0"
   ],
   "require": {
-    "robloach/component-installer": "*"
+    "components/jquery": "*"
   }
 }
