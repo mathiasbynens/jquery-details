@@ -1,0 +1,13 @@
+{
+  "name": "mathiasbynens/jquery-details",
+  "description": "World's first details/summary polyfill.",
+  "type": "component",
+  "homepage": "http://mths.be/details",
+  "license": [
+    "MIT",
+    "GPL-2.0"
+  ],
+  "require": {
+    "robloach/component-installer": "*"
+  }
+}
