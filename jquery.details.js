@@ -101,7 +101,9 @@
 				    // Do the same for the info within the `details` element
 				    $detailsNotSummary = $details.children(':not(summary)'),
 				    // This will be used later to look for direct child text nodes
-				    $detailsNotSummaryContents = $details.contents(':not(summary)');
+				    $detailsNotSummaryContents = $details.contents().filter(function() {
+				    	return this.nodeName.toLowerCase() !== 'summary';	
+				    });
 
 				// If there is no `summary` in the current `details` element…
 				if (!$detailsSummary.length) {
