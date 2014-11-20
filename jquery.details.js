@@ -69,12 +69,19 @@
 
 		details = proto.details = function() {
 
-			return this.each(function() {
+			return this.each(function(index) {
 				var $details = $(this),
 				    $summary = $('summary', $details).first();
+				// If `$details` doesn’t already have one, assign a generated `id` for
+				// `aria-controls` on the `<summary>` to reference.
+				if (!$details.attr('id')) {
+					$details.attr('id', 'details-id-' + index);
+				}
+				$details.attr('role', 'group');
 				$summary.attr({
 					'role': 'button',
-					'aria-expanded': $details.prop('open')
+					'aria-expanded': $details.prop('open'),
+					'aria-controls': $details.attr('id')
 				}).on('click', function() {
 					// the value of the `open` property is the old value
 					var close = $details.prop('open');
@@ -92,7 +99,7 @@
 		details = proto.details = function() {
 
 			// Loop through all `details` elements
-			return this.each(function() {
+			return this.each(function(index) {
 
 				// Store a reference to the current `details` element in a variable
 				var $details = $(this),
@@ -102,7 +109,11 @@
 				    $detailsNotSummary = $details.children(':not(summary)'),
 				    // This will be used later to look for direct child text nodes
 				    $detailsNotSummaryContents = $details.contents(':not(summary)');
-
+				//assign a generated @id to the details element for reference by @aria-controls on the summary
+				if (!$details.attr('id')) {
+					$details.attr('id', 'details-id-' + index);
+				}
+				$details.attr('role', 'group');
 				// If there is no `summary` in the current `details` element…
 				if (!$detailsSummary.length) {
 					// …create one with default text
@@ -126,7 +137,7 @@
 				toggleOpen($details, $detailsSummary, $detailsNotSummary);
 
 				// Add `role=button` and set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
-				$detailsSummary.attr('role', 'button').noSelect().prop('tabIndex', 0).on('click', function() {
+				$detailsSummary.attr({'role': 'button', 'aria-controls': $details.attr('id')}).noSelect().prop('tabIndex', 0).on('click', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
 					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
