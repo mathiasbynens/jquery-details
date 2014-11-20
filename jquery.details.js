@@ -70,7 +70,7 @@
 
 		details = proto.details = function() {
 
-			return this.each(function() {
+			return this.each(function(i) {
 				var $details = $(this),
 				    $summary = $('summary', $details).first();
 				//if $details doesn't already one, assign a generated @id @aria-controls on the summary to reference
@@ -99,7 +99,7 @@
 		details = proto.details = function() {
 
 			// Loop through all `details` elements
-			return this.each(function() {
+			return this.each(function(i) {
 
 				// Store a reference to the current `details` element in a variable
 				var $details = $(this),
