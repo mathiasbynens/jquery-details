@@ -1,4 +1,5 @@
 /*! http://mths.be/details v0.1.0 by @mathias | includes http://mths.be/noselect v1.0.3 */
+/* forked 20-11-2014 by @jasonkiss and updated with support for role=group and @aria-controls */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -72,9 +73,15 @@
 			return this.each(function() {
 				var $details = $(this),
 				    $summary = $('summary', $details).first();
+				//if $details doesn't already one, assign a generated @id @aria-controls on the summary to reference
+				if (!$details.attr('id')) {
+					$details.attr('id', 'details-id-' + i);
+				}
+				$details.attr('role', 'group');
 				$summary.attr({
 					'role': 'button',
-					'aria-expanded': $details.prop('open')
+					'aria-expanded': $details.prop('open'),
+					'aria-controls': $details.attr('id')
 				}).on('click', function() {
 					// the value of the `open` property is the old value
 					var close = $details.prop('open');
@@ -102,7 +109,11 @@
 				    $detailsNotSummary = $details.children(':not(summary)'),
 				    // This will be used later to look for direct child text nodes
 				    $detailsNotSummaryContents = $details.contents(':not(summary)');
-
+				//assign a generated @id to the details element for reference by @aria-controls on the summary
+				if (!$details.attr('id')) {
+					$details.attr('id', 'details-id-' + i);
+				}
+				$details.attr('role', 'group');
 				// If there is no `summary` in the current `details` element…
 				if (!$detailsSummary.length) {
 					// …create one with default text
@@ -126,7 +137,7 @@
 				toggleOpen($details, $detailsSummary, $detailsNotSummary);
 
 				// Add `role=button` and set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
-				$detailsSummary.attr('role', 'button').noSelect().prop('tabIndex', 0).on('click', function() {
+				$detailsSummary.attr({'role': 'button', 'aria-controls': $details.attr('id')}).noSelect().prop('tabIndex', 0).on('click', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
 					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
