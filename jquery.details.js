@@ -93,11 +93,19 @@
 
 			// Loop through all `details` elements
 			return this.each(function() {
+				var $details = $(this);
 
-				// Store a reference to the current `details` element in a variable
-				var $details = $(this),
-				    // Store a reference to the `summary` element of the current `details` element (if any) in a variable
-				    $detailsSummary = $('summary', $details).first(),
+				// Wrap all direct child nodes in <span>s for hide-ability
+				var emptyTextNodeType = 3;
+				var containsNonWhitespace = /[^ \t\n\f\r]/;
+				$details.contents()
+					.filter(function() {
+						return this.nodeType === emptyTextNodeType &&
+							containsNonWhitespace.test(this.data);
+				  	}).wrap('<span>');
+
+				// Store a reference to the `summary` element of the current `details` element (if any) in a variable
+				var $detailsSummary = $('summary', $details).first(),
 				    // Do the same for the info within the `details` element
 				    $detailsNotSummary = $details.children(':not(summary)'),
 				    // This will be used later to look for direct child text nodes
@@ -107,18 +115,6 @@
 				if (!$detailsSummary.length) {
 					// …create one with default text
 					$detailsSummary = $('<summary>').text('Details').prependTo($details);
-				}
-
-				// Look for direct child text nodes
-				if ($detailsNotSummary.length != $detailsNotSummaryContents.length) {
-					// Wrap child text nodes in a `span` element
-					$detailsNotSummaryContents.filter(function() {
-						// Only keep the node in the collection if it’s a text node containing more than only whitespace
-						// http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#space-character
-						return this.nodeType == 3 && /[^ \t\n\f\r]/.test(this.data);
-					}).wrap('<span>');
-					// There are now no direct child text nodes anymore — they’re wrapped in `span` elements
-					$detailsNotSummary = $details.children(':not(summary)');
 				}
 
 				// Hide content unless there’s an `open` attribute
