@@ -1,0 +1,11 @@
+{
+  "name": "jquery-details",
+  "version": "0.0.1",
+  "description": "polyfills `<details>`/`<summary>` HTML elements and adds the appropriate ARIA annotations for optimal accessibility",
+  "main": "jquery.details.js",
+  "repository": "github:mathiasbynens/jquery-details",
+  "files": ["jquery.details.js"],
+  "keywords": ["jquery", "details", "summary", "polyfill"],
+  "author": "Mathias Bynens",
+  "license": "MIT"
+}
