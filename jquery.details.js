@@ -1,5 +1,4 @@
 /*! http://mths.be/details v0.1.0 by @mathias | includes http://mths.be/noselect v1.0.3 */
-/* forked 20-11-2014 by @jasonkiss and updated with support for role=group and @aria-controls */
 ;(function(document, $) {
 
 	var proto = $.fn,
@@ -73,7 +72,7 @@
 			return this.each(function(i) {
 				var $details = $(this),
 				    $summary = $('summary', $details).first();
-				//if $details doesn't already one, assign a generated @id @aria-controls on the summary to reference
+				//if $details doesn't already one, assign a generated @id for @aria-controls on the summary to reference
 				if (!$details.attr('id')) {
 					$details.attr('id', 'details-id-' + i);
 				}
