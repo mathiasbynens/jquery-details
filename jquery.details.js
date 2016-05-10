@@ -82,7 +82,7 @@
 					'role': 'button',
 					'aria-expanded': $details.prop('open'),
 					'aria-controls': $details.attr('id')
-				}).on('click', function() {
+				}).off('click.details').on('click.details', function() {
 					// the value of the `open` property is the old value
 					var close = $details.prop('open');
 					$summary.attr('aria-expanded', !close);
@@ -137,7 +137,7 @@
 				toggleOpen($details, $detailsSummary, $detailsNotSummary);
 
 				// Add `role=button` and set the `tabindex` of the `summary` element to `0` to make it keyboard accessible
-				$detailsSummary.attr({'role': 'button', 'aria-controls': $details.attr('id')}).noSelect().prop('tabIndex', 0).on('click', function() {
+				$detailsSummary.attr({'role': 'button', 'aria-controls': $details.attr('id')}).noSelect().prop('tabIndex', 0).off('click.details').on('click.details', function() {
 					// Focus on the `summary` element
 					$detailsSummary.focus();
 					// Toggle the `open` and `aria-expanded` attributes and the `open` property of the `details` element and display the additional info
