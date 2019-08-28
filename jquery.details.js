@@ -106,9 +106,9 @@
 				    // Store a reference to the `summary` element of the current `details` element (if any) in a variable
 				    $detailsSummary = $('summary', $details).first(),
 				    // Do the same for the info within the `details` element
-				    $detailsNotSummary = $details.children(':not(summary)'),
+				    $detailsNotSummary = $details.children(':not(script, style, summary)'),
 				    // This will be used later to look for direct child text nodes
-				    $detailsNotSummaryContents = $details.contents(':not(summary)');
+				    $detailsNotSummaryContents = $details.contents(':not(script, style, summary)');
 				//assign a generated @id to the details element for reference by @aria-controls on the summary
 				if (!$details.attr('id')) {
 					$details.attr('id', 'details-id-' + index);
@@ -129,7 +129,7 @@
 						return this.nodeType == 3 && /[^ \t\n\f\r]/.test(this.data);
 					}).wrap('<span>');
 					// There are now no direct child text nodes anymore — they’re wrapped in `span` elements
-					$detailsNotSummary = $details.children(':not(summary)');
+					$detailsNotSummary = $details.children(':not(script, style, summary)');
 				}
 
 				// Hide content unless there’s an `open` attribute
