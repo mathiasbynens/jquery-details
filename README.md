@@ -1,3 +1,9 @@
+# To install and manage with NPM support
+
+```
+npm install --save blackdrago/jquery-details
+```
+
 # `<details>`/`<summary>` jQuery plugin
 
 This plugin polyfills `<details>`/`<summary>` HTML elements and adds [the appropriate ARIA annotations](http://mathiasbynens.be/notes/html5-details-jquery#comment-58) for optimal accessibility. [More information can be found in my blog post on the subject.](http://mathiasbynens.be/notes/html5-details-jquery)
