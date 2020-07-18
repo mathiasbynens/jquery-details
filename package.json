@@ -1,0 +1,16 @@
+{
+  "name": "jquery-details",
+  "version": "0.1.1",
+  "description": "npm support for jquery-details. jQuery plugin that polyfills detail/summary HTML elements with 508 compliance support.",
+  "main": "jquery.details.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackdrago/jquery-details.git"
+  },
+  "author": "",
+  "license": "MIT and GPL",
+  "homepage": "https://github.com/blackdrago/jquery-details#readme",
+  "dependencies": {
+    "jquery": ">=1.9"
+  }
+}
